@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #111111;
+  --primary: #4a0404; /* Deep Maroon from Logo */
+  --primary-light: #630d0d;
+  --secondary: #ffffff;
+  --secondary-muted: #fefaf6; /* Warm subtle cream */
+  --accent: #c5a47e; /* Gold from Logo */
+  --accent-light: #d4b895;
+  --neutral-charcoal: #333333;
+  --neutral-gray: #777777;
+  --neutral-light: #e5e5e5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-secondary: var(--secondary);
+  --color-secondary-muted: var(--secondary-muted);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-neutral-charcoal: var(--neutral-charcoal);
+  --color-neutral-gray: var(--neutral-gray);
+  --color-neutral-light: var(--neutral-light);
+
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-playfair), serif;
+
+  --animate-fade-in: fade-in 0.8s ease-out forwards;
+  --animate-slide-up: slide-up 0.8s ease-out forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--secondary-muted);
+  color: var(--primary);
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--primary);
+}
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
