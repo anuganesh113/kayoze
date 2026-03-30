@@ -4,15 +4,17 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, ShoppingBag, User, Search } from "lucide-react";
+import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
+import { Menu, X, ShoppingBag, User, Search, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { useCart } from "@/context/CartContext";
 import SearchModal from "./SearchModal";
 import AuthModal from "./AuthModal";
 
 export default function Navbar() {
   const { totalItems, setIsCartOpen } = useCart();
+  const { wishlistIds } = useWishlist();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -112,6 +114,22 @@ export default function Navbar() {
           >
             <User size={20} />
           </button>
+          <Link 
+            href="/wishlist" 
+            className="hidden sm:block hover:text-accent transition-colors relative cursor-pointer"
+            aria-label={`Wishlist with ${wishlistIds.length} items`}
+          >
+            <Heart size={20} />
+            {wishlistIds.length > 0 && (
+              <motion.span 
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="absolute -top-2 -right-2 bg-accent text-secondary text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-primary/20"
+              >
+                {wishlistIds.length}
+              </motion.span>
+            )}
+          </Link>
           <button 
             onClick={() => setIsCartOpen(true)}
             className="hover:text-accent transition-colors relative cursor-pointer"

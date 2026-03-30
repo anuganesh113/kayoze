@@ -7,6 +7,7 @@ import { ChevronRight, Heart, Ruler, Minus, Plus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import ProductCard from "@/components/shop/ProductCard";
 
 // Similar products mock data
@@ -105,8 +106,7 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const [zoomPos, setZoomPos] = useState({ x: 0, y: 0 });
   const [isZooming, setIsZooming] = useState(false);
 
-  // States for similar products cards
-  const [wishlistedIds, setWishlistedIds] = useState<string[]>([]);
+  const { toggleWishlist, isInWishlist } = useWishlist();
   const [activeTooltipId, setActiveTooltipId] = useState<string | null>(null);
   const [lastAction, setLastAction] = useState<'added' | 'removed' | null>(null);
   const [activeModalId, setActiveModalId] = useState<string | null>(null);
@@ -114,8 +114,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   const handleWishlistToggle = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const isAdding = !wishlistedIds.includes(id);
-    setWishlistedIds(prev => isAdding ? [...prev, id] : prev.filter(item => item !== id));
+    const isAdding = !isInWishlist(id);
+    toggleWishlist(id);
     setLastAction(isAdding ? 'added' : 'removed');
     if (isAdding) {
       setActiveModalId(id);
@@ -297,8 +297,20 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 </div>
               )}
             </button>
-            <button className="w-full flex items-center justify-center gap-2 border border-primary text-primary py-4 font-sans uppercase tracking-widest text-sm font-medium hover:bg-neutral-light/30 transition-colors duration-300 cursor-pointer">
-              <Heart size={18} /> Add to Wishlist
+            <button 
+              onClick={(e) => handleWishlistToggle(product.id, e)}
+              className={`w-full flex items-center justify-center gap-2 border border-primary py-4 font-sans uppercase tracking-widest text-sm font-medium transition-all duration-300 cursor-pointer ${
+                isInWishlist(product.id) 
+                ? 'bg-primary text-secondary' 
+                : 'text-primary hover:bg-neutral-light/30'
+              }`}
+            >
+              <Heart 
+                size={18} 
+                className="transition-transform duration-300"
+                fill={isInWishlist(product.id) ? "currentColor" : "none"} 
+              /> 
+              {isInWishlist(product.id) ? "Added to Wishlist" : "Add to Wishlist"}
             </button>
           </div>
 
@@ -358,12 +370,6 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             >
               <ProductCard 
                 product={product}
-                wishlistedIds={wishlistedIds}
-                handleWishlistToggle={handleWishlistToggle}
-                activeTooltipId={activeTooltipId}
-                activeModalId={activeModalId}
-                setActiveModalId={setActiveModalId}
-                lastAction={lastAction}
               />
             </motion.div>
           ))}

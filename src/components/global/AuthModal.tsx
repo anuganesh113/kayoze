@@ -63,14 +63,14 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 <div className="flex gap-10 border-b border-primary/5 mb-12">
                   <button 
                     onClick={() => setMode("login")}
-                    className={`pb-4 text-[10px] uppercase tracking-[0.4em] font-bold transition-all relative ${mode === "login" ? "text-primary" : "text-primary/20 hover:text-primary/40"}`}
+                    className={`pb-4 text-[10px] uppercase tracking-[0.4em] font-bold transition-all relative ${mode === "login" ? "text-primary" : "text-primary/50 hover:text-primary/70"}`}
                   >
                     Login
                     {mode === "login" && <motion.div layoutId="underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent" />}
                   </button>
                   <button 
                     onClick={() => setMode("signup")}
-                    className={`pb-4 text-[10px] uppercase tracking-[0.4em] font-bold transition-all relative ${mode === "signup" ? "text-primary" : "text-primary/20 hover:text-primary/40"}`}
+                    className={`pb-4 text-[10px] uppercase tracking-[0.4em] font-bold transition-all relative ${mode === "signup" ? "text-primary" : "text-primary/50 hover:text-primary/70"}`}
                   >
                     Create Account
                     {mode === "signup" && <motion.div layoutId="underline" className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent" />}
@@ -90,7 +90,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                       <h2 className="text-4xl font-serif text-primary tracking-tight mb-2">
                         {mode === "login" ? "Welcome Back" : "Begin Your Journey"}
                       </h2>
-                      <p className="text-primary/40 text-xs italic font-serif">
+                      <p className="text-primary/70 text-xs italic font-serif">
                         {mode === "login" ? "Enter your credentials to access your sartorial world." : "Join the Kayoze circle for an elevated menswear experience."}
                       </p>
                     </div>
@@ -98,42 +98,42 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                     <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
                       {mode === "signup" && (
                         <div className="relative group">
-                          <label className="text-[8px] uppercase tracking-[0.2em] font-black text-primary/30 block mb-1 group-focus-within:text-accent transition-colors">Full Name</label>
+                          <label className="text-[8px] uppercase tracking-[0.2em] font-bold text-primary/70 block mb-1 group-focus-within:text-accent transition-colors">Full Name</label>
                           <div className="relative">
                             <input 
                               type="text" 
                               placeholder="Signature name"
-                              className="w-full bg-transparent border-b border-primary/10 py-3 text-lg font-serif focus:outline-none focus:border-accent transition-all placeholder:text-primary/10 italic"
+                              className="w-full bg-transparent border-b border-primary/20 py-3 text-lg font-serif focus:outline-none focus:border-accent transition-all placeholder:text-primary/30 italic text-primary"
                             />
-                            <User size={14} className="absolute right-0 top-1/2 -translate-y-1/2 text-primary/10" />
+                            <User size={14} className="absolute right-0 top-1/2 -translate-y-1/2 text-primary/30" />
                           </div>
                         </div>
                       )}
 
                       <div className="relative group">
-                        <label className="text-[8px] uppercase tracking-[0.2em] font-black text-primary/30 block mb-1 group-focus-within:text-accent transition-colors">Electronic Mail</label>
+                        <label className="text-[8px] uppercase tracking-[0.2em] font-bold text-primary/70 block mb-1 group-focus-within:text-accent transition-colors">Electronic Mail</label>
                         <div className="relative">
                           <input 
                             type="email" 
                             placeholder="address@correspondence.com"
-                            className="w-full bg-transparent border-b border-primary/10 py-3 text-lg font-serif focus:outline-none focus:border-accent transition-all placeholder:text-primary/10 italic"
+                            className="w-full bg-transparent border-b border-primary/20 py-3 text-lg font-serif focus:outline-none focus:border-accent transition-all placeholder:text-primary/30 italic text-primary"
                           />
-                          <Mail size={14} className="absolute right-0 top-1/2 -translate-y-1/2 text-primary/10" />
+                          <Mail size={14} className="absolute right-0 top-1/2 -translate-y-1/2 text-primary/30" />
                         </div>
                       </div>
 
                       <div className="relative group">
-                        <label className="text-[8px] uppercase tracking-[0.2em] font-black text-primary/30 block mb-1 group-focus-within:text-accent transition-colors">Passcode</label>
+                        <label className="text-[8px] uppercase tracking-[0.2em] font-bold text-primary/70 block mb-1 group-focus-within:text-accent transition-colors">Passcode</label>
                         <div className="relative">
                           <input 
                             type={showPassword ? "text" : "password"} 
                             placeholder="••••••••"
-                            className="w-full bg-transparent border-b border-primary/10 py-3 text-lg font-serif focus:outline-none focus:border-accent transition-all placeholder:text-primary/10 italic"
+                            className="w-full bg-transparent border-b border-primary/20 py-3 text-lg font-serif focus:outline-none focus:border-accent transition-all placeholder:text-primary/30 italic text-primary"
                           />
                           <button 
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 text-primary/10 hover:text-accent transition-colors"
+                            className="absolute right-0 top-1/2 -translate-y-1/2 text-primary/30 hover:text-accent transition-colors"
                           >
                             {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
                           </button>
@@ -142,7 +142,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
                       {mode === "login" && (
                         <div className="flex justify-end">
-                          <button className="text-[9px] uppercase tracking-widest text-primary/40 hover:text-accent transition-colors">Lost your passcode?</button>
+                          <button className="text-[9px] uppercase tracking-widest text-primary/60 hover:text-accent transition-colors">Lost your passcode?</button>
                         </div>
                       )}
 

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
+import { useWishlist } from "@/context/WishlistContext";
 import WishlistModal from "@/components/global/WishlistModal";
 
 interface Color {
@@ -26,24 +27,30 @@ interface Product {
 
 interface ProductCardProps {
   product: Product;
-  wishlistedIds: string[];
-  handleWishlistToggle: (id: string, e: React.MouseEvent) => void;
-  activeTooltipId: string | null;
-  activeModalId: string | null;
-  setActiveModalId: (id: string | null) => void;
-  lastAction: 'added' | 'removed' | null;
 }
 
 export default function ProductCard({ 
   product, 
-  wishlistedIds, 
-  handleWishlistToggle, 
-  activeTooltipId, 
-  activeModalId, 
-  setActiveModalId, 
-  lastAction 
 }: ProductCardProps) {
+  const { toggleWishlist, isInWishlist } = useWishlist();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [activeModalId, setActiveModalId] = useState<string | null>(null);
+  const [activeTooltipId, setActiveTooltipId] = useState<string | null>(null);
+  const [lastAction, setLastAction] = useState<'added' | 'removed' | null>(null);
+
+  const handleWishlistToggleLocal = (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const isAdding = !isInWishlist(id);
+    toggleWishlist(id);
+    setLastAction(isAdding ? 'added' : 'removed');
+    if (isAdding) {
+      setActiveModalId(id);
+    } else {
+      setActiveTooltipId(id);
+      setTimeout(() => setActiveTooltipId(null), 2000);
+    }
+  };
 
   const nextImage = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -132,13 +139,13 @@ export default function ProductCard({
           </AnimatePresence>
           
           <button 
-            onClick={(e) => handleWishlistToggle(product.id, e)}
+            onClick={(e) => handleWishlistToggleLocal(product.id, e)}
             className="p-3 bg-white/80 backdrop-blur-md rounded-full text-primary hover:text-accent hover:bg-white transition-all transform hover:scale-110 shadow-sm opacity-0 group-hover:opacity-100 duration-300 cursor-pointer"
             aria-label="Add to Wishlist"
           >
             <Heart 
               size={18} 
-              className={wishlistedIds.includes(product.id) ? "fill-accent text-accent" : ""} 
+              className={isInWishlist(product.id) ? "fill-accent text-accent" : ""} 
             />
           </button>
 

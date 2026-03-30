@@ -4,6 +4,7 @@ import Navbar from "@/components/global/Navbar";
 import Footer from "@/components/global/Footer";
 import CartDrawer from "@/components/global/CartDrawer";
 import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -32,12 +33,14 @@ export default function RootLayout({
         className={`${inter.variable} ${playfairDisplay.variable} font-sans antialiased bg-primary text-secondary`}
       >
         <CartProvider>
-          <Navbar />
-          <CartDrawer />
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
+          <WishlistProvider>
+            <Navbar />
+            <CartDrawer />
+            <main className="min-h-screen">
+              {children}
+            </main>
+            <Footer />
+          </WishlistProvider>
         </CartProvider>
       </body>
     </html>
